@@ -1,7 +1,6 @@
 export default class Controller {
     get speed() {
-        // return 1000 - this.game.level * 100 <= 0 ? 100 : 1000 - this.game.level * 100;
-        return 800;
+        return 1000 - this.game.level * 100 <= 0 ? 100 : 1000 - this.game.level * 100;
     }
     constructor(game, view) {
         this.game = game;
@@ -12,15 +11,19 @@ export default class Controller {
 
 
         this.view.renderMainScreen(this.game.getState());
-        this.startTimer();
+        this.view.renderStartScreen();
         document.addEventListener('keydown', (event) => this.handleKeyDown(event));
         document.addEventListener('keyup', (event) => this.handleKeyUp(event))
     }
     start() {
-
+        this.isPlaying = true;
+        this.view.renderMainScreen(this.game.getState());
+        this.startTimer();
     }
-    stop() {
-
+    pause() {
+        this.isPlaying = false;
+        this.stopTimer();
+        this.view.renderResumeScreen();
     }
     startTimer() {
         let tick;
@@ -28,7 +31,7 @@ export default class Controller {
             this.game.movePieceDown();
             this.view.renderMainScreen(this.game.getState());
 
-            this.timerId = setTimeout(tick, this.speed)
+            this.timerId = setTimeout(tick, this.speed);
         }, this.speed);
     }
     stopTimer() {
@@ -41,36 +44,38 @@ export default class Controller {
         game.resetAll();
     }
     handleKeyDown(event) {
-        switch (event.key) {
-            case 'ArrowRight':
-                this.game.movePieceRight();
-                this.view.renderMainScreen(this.game.getState())
-                break;
-            case 'ArrowLeft':
-                this.game.movePieceLeft();
-                this.view.renderMainScreen(this.game.getState())
-                break;
-            case 'ArrowUp':
-                this.game.rotatePiece();
-                this.view.renderMainScreen(this.game.getState())
+        if(this.isPlaying) {
+            switch (event.key) {
+                case 'ArrowRight':
+                    this.game.movePieceRight();
+                    this.view.renderMainScreen(this.game.getState())
+                    break;
+                case 'ArrowLeft':
+                    this.game.movePieceLeft();
+                    this.view.renderMainScreen(this.game.getState())
+                    break;
+                case 'ArrowUp':
+                    this.game.rotatePiece();
+                    this.view.renderMainScreen(this.game.getState())
 
-                break;
-            case 'ArrowDown':
-                this.game.movePieceDown();
-                this.view.renderMainScreen(this.game.getState())
+                    break;
+                case 'ArrowDown':
+                    this.game.movePieceDown();
+                    this.view.renderMainScreen(this.game.getState())
 
-                this.stopTimer();
-                break;
-            case 'ArrowRight':
-                this.game.movePieceRight();
-                this.view.renderMainScreen(this.game.getState())
-                break;
+                    this.stopTimer();
+                    break;
+                case 'Enter':
+                    this.pause();
+                    break;
+            }
+        } else if(!this.isPlaying && event.key === 'Enter') {
+            this.start();
         }
     }
     handleKeyUp(event) {
-        if(event.key === 'ArrowDown') {
+        if(this.isPlaying && event.key === 'ArrowDown') {
             this.startTimer();
         }
     }
-
 }

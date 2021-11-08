@@ -132,7 +132,6 @@ export default class View {
         this.context.fillStyle = this.secondaryFontColor;
         this.context.fillText('Press ENTER to Resume', this.width / 2, this.height / 2)
     }
-
     renderEndScreen(state) {
         this.context.fillStyle = 'rgba(255, 255, 255, 0.9)'
         this.context.fillRect(
@@ -157,6 +156,7 @@ export default class View {
         this.context.fillText(`Score: ${score}`, this.width / 2, this.height / 2)
         this.context.fillText('Press ENTER to Restart', this.width / 2, this.height / 2 + this.lineHeight);
     }
+
     renderPlayfield(state) {
         const playfield = state.playfield;
 
