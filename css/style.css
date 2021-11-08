@@ -1,0 +1,50 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Press Start 2P', cursive;
+    background-color: black;
+}
+
+.canvas__container {
+    margin: 0 auto;
+    padding: 30px 10px;
+}
+
+.canvas__container .title__container {
+    width: 100%;
+}
+.canvas__container .title {
+    width: 200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+}
+.canvas__container span {
+    text-transform: uppercase;
+    font-size: 2rem;
+    padding: 0.5em 0;
+    margin: 0;
+}
+.canvas__container span:nth-child(1) {
+    color: blue;
+}
+.canvas__container span:nth-child(2) {
+    color: yellow;
+}
+.canvas__container span:nth-child(3) {
+    color: orange;
+}
+.canvas__container span:nth-child(4) {
+    color: red;
+}
+.canvas__container span:nth-child(5) {
+    color: purple;
+}
+.canvas__container span:nth-child(6) {
+    color: green;
+}
