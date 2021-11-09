@@ -9,8 +9,9 @@ export default class View {
             6: 'yellow',
             7: 'red',
         };
-        this.primaryFontColor = 'white';
-        this.secondaryFontColor = 'black'
+        this.fontColor = 'rgba(255, 255, 255, 1)';
+        this.backgroundColor = 'rgba(0, 0, 0, 1)';
+        this.transparentBackgroundColor = this.composeColorWithNewOpacity(this.backgroundColor, 0.9);
         this.fontSize = 18;
         this.lineHeight = 2 * this.fontSize;
         this.fontFamily = 'Press Start 2P';
@@ -47,7 +48,7 @@ export default class View {
         const lines = state.lines;
         const level = state.level;
         const nextPiece = state.nextPiece;
-        this.context.fillStyle = this.primaryFontColor;
+        this.context.fillStyle = this.fontColor;
         this.context.font = `${this.fontSize}px "${this.fontFamily}"`;
         this.context.textBaseline = 'top';
         this.context.textAlign = 'start';
@@ -79,66 +80,33 @@ export default class View {
         this.renderPanel(state)
     }
     renderStartScreen() {
-        this.context.fillStyle = 'rgba(255, 255, 255, 0.9)'
-        this.context.fillRect(
-            this.playfieldBorderWidth,
-            this.playfieldBorderWidth,
-            this.playfieldInnerWidth,
-            this.playfieldInnerHeight
-        );
-        this.context.fillRect(
-            this.playfieldWidth,
-            0,
-            this.panelWidth,
-            this.panelHeight
-        );
+        this.context.fillStyle = this.backgroundColor;
+        this.context.fillRect(0, 0, this.width, this.height);
 
         this.context.textBaseline = "middle";
         this.context.textAlign =  "center";
         this.context.font = `${this.fontSize}px "${this.fontFamily}"`;
-        this.context.fillStyle = this.secondaryFontColor;
+        this.context.fillStyle = this.fontColor;
         this.context.fillText('Press ENTER to Start', this.width / 2, this.height / 2)
     }
     renderResumeScreen() {
-        this.context.fillStyle = 'rgba(255, 255, 255, 0.9)'
-        this.context.fillRect(
-            this.playfieldBorderWidth,
-            this.playfieldBorderWidth,
-            this.playfieldInnerWidth,
-            this.playfieldInnerHeight
-        );
-        this.context.fillRect(
-            this.playfieldWidth,
-            0,
-            this.panelWidth,
-            this.panelHeight
-        );
+        this.context.fillStyle = this.transparentBackgroundColor;
+        this.context.fillRect(0, 0, this.width, this.height);
 
         this.context.textBaseline = "middle";
         this.context.textAlign =  "center";
         this.context.font = `${this.fontSize}px "${this.fontFamily}"`;
-        this.context.fillStyle = this.secondaryFontColor;
+        this.context.fillStyle = this.fontColor;
         this.context.fillText('Press ENTER to Resume', this.width / 2, this.height / 2)
     }
     renderEndScreen(state) {
-        this.context.fillStyle = 'rgba(255, 255, 255, 0.9)'
-        this.context.fillRect(
-            this.playfieldBorderWidth,
-            this.playfieldBorderWidth,
-            this.playfieldInnerWidth,
-            this.playfieldInnerHeight
-        );
-        this.context.fillRect(
-            this.playfieldWidth,
-            0,
-            this.panelWidth,
-            this.panelHeight
-        );
+        this.context.fillStyle = this.backgroundColor;
+        this.context.fillRect(0, 0, this.width, this.height);
 
         this.context.textBaseline = "middle";
         this.context.textAlign =  "center";
         this.context.font = `${this.fontSize}px "${this.fontFamily}"`;
-        this.context.fillStyle = this.secondaryFontColor;
+        this.context.fillStyle = this.fontColor;
         this.context.fillText('Game Over', this.width / 2, this.height / 2 - this.lineHeight);
         let score = state.score;
         this.context.fillText(`Score: ${score}`, this.width / 2, this.height / 2)
@@ -161,7 +129,7 @@ export default class View {
             }
         }
         //render border
-        this.context.strokeStyle = this.primaryFontColor;
+        this.context.strokeStyle = this.fontColor;
         this.context.lineWidth = this.playfieldBorderWidth;
         this.context.strokeRect(
             this.playfieldBorderWidth / 2,
@@ -173,7 +141,7 @@ export default class View {
     renderBlock(x, y, width, height, color) {
         this.context.fillStyle = color;
         this.context.fillRect(x, y, width, height);
-        this.context.strokeStyle = this.primaryFontColor;
+        this.context.strokeStyle = this.fontColor;
         this.context.lineWidth = 1;
         this.context.strokeRect(x, y, width, height)
     }
@@ -190,5 +158,10 @@ export default class View {
             this.panelWidth,
             this.panelHeight
         );
+    }
+    composeColorWithNewOpacity(oldColor, opacityValue) {
+        let newColor = oldColor.split(', ');
+        newColor[newColor.length - 1] = `${opacityValue})`;
+        return newColor.join(', ');
     }
 }
