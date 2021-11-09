@@ -11,7 +11,6 @@ export default class Controller {
         this.isPlaying = false;
         this.timerId = null;
 
-
         this.view.renderMainScreen(this.game.getState());
         this.view.renderStartScreen();
         document.addEventListener('keydown', (event) => this.handleKeyDown(event));

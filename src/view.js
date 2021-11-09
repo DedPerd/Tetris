@@ -40,19 +40,7 @@ export default class View {
         this.canvas.width = this.width;
         this.canvas.height = this.height;
         element.style.width = `${width + 20}px`;
-        element.appendChild(this.canvas)
-
-        this.renderPlayfieldBorder();
-    }
-    renderPlayfieldBorder() {
-        this.context.strokeStyle = this.primaryFontColor;
-        this.context.lineWidth = this.playfieldBorderWidth;
-        this.context.strokeRect(
-            this.playfieldBorderWidth / 2,
-            this.playfieldBorderWidth / 2,
-            this.playfieldWidth - this.playfieldBorderWidth,
-            this.playfieldHeight - this.playfieldBorderWidth
-        );
+        element.appendChild(this.canvas);
     }
     renderPanel(state) {
         const score = state.score;
@@ -159,7 +147,6 @@ export default class View {
 
     renderPlayfield(state) {
         const playfield = state.playfield;
-
         for(let y = 0; y < playfield.length; y++) {
             for(let x = 0; x < playfield[y].length; x++) {
                 if(playfield[y][x]) {
@@ -173,6 +160,15 @@ export default class View {
                 }
             }
         }
+        //render border
+        this.context.strokeStyle = this.primaryFontColor;
+        this.context.lineWidth = this.playfieldBorderWidth;
+        this.context.strokeRect(
+            this.playfieldBorderWidth / 2,
+            this.playfieldBorderWidth / 2,
+            this.playfieldWidth - this.playfieldBorderWidth,
+            this.playfieldHeight - this.playfieldBorderWidth
+        );
     }
     renderBlock(x, y, width, height, color) {
         this.context.fillStyle = color;
