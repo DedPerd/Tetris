@@ -2,11 +2,13 @@ export default class Controller {
     get speed() {
         return 1000 - this.game.level * 100 <= 0 ? 100 : 1000 - this.game.level * 100;
     }
+    get isGameOver() {
+        return this.game.topOut;
+    }
     constructor(game, view) {
         this.game = game;
         this.view = view;
         this.isPlaying = false;
-        this.isGameOver = false;
         this.timerId = null;
 
 
@@ -29,19 +31,22 @@ export default class Controller {
         let tick;
         this.timerId = setTimeout(tick = () => {
             this.game.movePieceDown();
-            this.view.renderMainScreen(this.game.getState());
 
-            this.timerId = setTimeout(tick, this.speed);
+            if(this.isGameOver) {
+                this.view.renderEndScreen(this.game.getState());
+                this.game.resetAll();
+                this.isPlaying = false;
+                this.game.topOut = false;
+            } else {
+                this.view.renderMainScreen(this.game.getState());
+                this.isPlaying = true;
+                this.timerId = setTimeout(tick, this.speed);
+            }
+    
         }, this.speed);
     }
     stopTimer() {
         clearInterval(this.timerId);
-    }
-    gameOver() {
-        this.isPlaying = false;
-        this.isGameOver = false;
-        view.renderEndScreen(game.getState());
-        game.resetAll();
     }
     handleKeyDown(event) {
         if(this.isPlaying) {
@@ -63,6 +68,15 @@ export default class Controller {
                     this.game.movePieceDown();
                     this.view.renderMainScreen(this.game.getState())
 
+                    if(this.isGameOver) {
+                        this.view.renderEndScreen(this.game.getState());
+                        this.game.resetAll();
+                        this.isPlaying = false;
+                        this.game.topOut = false;
+                    } else {
+                        this.view.renderMainScreen(this.game.getState());
+                        this.isPlaying = true;
+                    }
                     this.stopTimer();
                     break;
                 case 'Enter':

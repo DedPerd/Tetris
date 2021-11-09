@@ -11,6 +11,7 @@ export default class Game {
 
         this.score = 0;
         this.lines = 0;
+        this.topOut = false;
     }
 
     movePieceRight() {
@@ -32,6 +33,9 @@ export default class Game {
             this.lockPiece();
             this.updateScore(this.clearLines());
             this.updatePieces();
+        }
+        if(this.hasCollision()) {
+            this.topOut = true;
         }
     }
     rotatePiece() {
