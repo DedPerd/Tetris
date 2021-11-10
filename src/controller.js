@@ -1,6 +1,7 @@
 export default class Controller {
     get speed() {
-        return 1000 - this.game.level * 100 <= 0 ? 100 : 1000 - this.game.level * 100;
+        const delayList = [ 799, 716, 633, 550, 466, 383, 300, 217, 134, 100, 84, 84, 84, 67, 67, 67, 50, 50, 50, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 17 ];
+        return this.game.level < 30 ? delayList[this.game.level] : delayList[29];
     }
     get isGameOver() {
         return this.game.topOut;
