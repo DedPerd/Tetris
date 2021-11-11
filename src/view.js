@@ -37,11 +37,14 @@ export default class View {
 
         this.canvas = document.createElement('canvas');
         this.context = this.canvas.getContext('2d');
-
         this.canvas.width = this.width;
         this.canvas.height = this.height;
-        element.style.width = `${width + 20}px`;
+        element.style.width = `${width}px`
         element.appendChild(this.canvas);
+
+        if(element.parentElement.classList.contains('game-container')) {
+            element.parentElement.style.width = `${width}px`;
+        }
     }
     renderPanel(state) {
         const score = state.score;

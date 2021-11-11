@@ -6,7 +6,7 @@ const columns = 10
 const rows = 20;
 const width = 450;
 const height = 600;
-const element = document.querySelector('#canvas')
+const element = document.querySelector('#playfield');
 
 const game = new Game(columns, rows);
 const view = new View(element, width, height, columns, rows);
