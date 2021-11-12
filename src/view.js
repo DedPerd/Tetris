@@ -40,11 +40,58 @@ export default class View {
         this.context = this.canvas.getContext('2d');
         this.canvas.width = this.width;
         this.canvas.height = this.height;
-        element.style.width = `${width}px`
+        element.style.width = `${this.width}px`
         element.appendChild(this.canvas);
 
         if(element.parentElement.classList.contains('game-container')) {
             element.parentElement.style.width = `${width}px`;
+        }
+
+        this.playbackStatus = 'off';
+        this.musicButton = {
+            x: this.panelX,
+            y: this.panelHeight - this.lineHeight,
+            width: 3.2 * this.fontSize,
+            height: 1.1 * this.fontSize
+        };
+    }
+    renderMusicButton(playbackStatus) {
+        let textX = this.musicButton.x + 0.1 * this.fontSize;
+        let textY = this.musicButton.y + 0.1 * this.fontSize;
+
+        this.context.fillStyle = this.fontColor;
+        this.context.font = `${this.fontSize}px "${this.fontFamily}"`;
+        this.context.textBaseline = 'top';
+        this.context.textAlign = 'start';
+        this.context.lineWidth = 2;
+        
+        this.context.fillText('Music:', this.musicButton.x, this.musicButton.y - this.lineHeight);
+
+        this.context.clearRect(
+            this.musicButton.x, 
+            this.musicButton.y, 
+            this.musicButton.width,
+            this.musicButton.height
+        );
+        switch(playbackStatus) {
+            case 'on':
+                this.context.strokeRect(
+                    this.musicButton.x, 
+                    this.musicButton.y, 
+                    this.musicButton.width,
+                    this.musicButton.height
+                );
+                this.context.fillText('On', textX, textY);
+                break;
+            case 'off':
+                this.context.strokeRect(
+                    this.musicButton.x, 
+                    this.musicButton.y, 
+                    this.musicButton.width,
+                    this.musicButton.height
+                );
+                this.context.fillText('Off', textX, textY);
+                break;
         }
     }
     renderPanel(state) {
@@ -76,7 +123,7 @@ export default class View {
                 }
             }
         }
-
+        this.renderMusicButton(this.playbackStatus);
     }
     renderMainScreen(state) {
         this.clearScreen()

@@ -15,7 +15,7 @@ export default class Controller {
         this.view.renderMainScreen(this.game.getState());
         this.view.renderStartScreen();
         document.addEventListener('keydown', (event) => this.handleKeyDown(event));
-        document.addEventListener('keyup', (event) => this.handleKeyUp(event))
+        document.addEventListener('keyup', (event) => this.handleKeyUp(event));
     }
     start() {
         this.isPlaying = true;
