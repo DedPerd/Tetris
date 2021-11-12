@@ -9,13 +9,6 @@ export default class View {
             6: 'yellow',
             7: 'red',
         };
-        this.fontColor = 'rgba(255, 255, 255, 1)';
-        this.backgroundColor = 'rgba(0, 0, 0, 1)';
-        this.transparentBackgroundColor = this.composeColorWithNewOpacity(this.backgroundColor, 0.9);
-        this.fontSize = 18;
-        this.lineHeight = 2 * this.fontSize;
-        this.fontFamily = 'Press Start 2P';
-
         this.width = width;
         this.height = height;
         this.columns = columns;
@@ -30,10 +23,18 @@ export default class View {
         this.playfieldInnerHeight = this.playfieldHeight - this.playfieldBorderWidth * 2;
         this.panelWidth = this.width - this.playfieldWidth;
         this.panelHeight = this.height;
-        this.panelX = this.playfieldWidth + this.fontSize;
-        this.panelY = this.fontSize;
         this.blockWidth = (this.playfieldInnerWidth - 2) / this.columns;
         this.blockHeight = (this.playfieldInnerHeight - 2)/ this.rows;
+
+        this.fontColor = 'rgba(255, 255, 255, 1)';
+        this.backgroundColor = 'rgba(0, 0, 0, 1)';
+        this.transparentBackgroundColor = this.composeColorWithNewOpacity(this.backgroundColor, 0.9);
+        this.fontSize = Math.round(this.width * 0.04);
+        this.lineHeight = 2 * this.fontSize;
+        this.fontFamily = 'Press Start 2P';
+
+        this.panelX = this.playfieldWidth + this.fontSize;
+        this.panelY = this.fontSize;
 
         this.canvas = document.createElement('canvas');
         this.context = this.canvas.getContext('2d');
